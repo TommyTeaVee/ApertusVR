@@ -570,14 +570,19 @@ void Ape::OISUserInputPlugin::saveUserNodePose()
 
 void Ape::OISUserInputPlugin::toggleUserNodePoses(Ape::NodeSharedPtr userNode)
 {
-	if (mUserNodePoses.size() > 0 && mUserNodePosesToggleIndex < mUserNodePoses.size())
+	if (mUserNodePoses.size() > 0)
 	{
-		userNode->setPosition(mUserNodePoses[mUserNodePosesToggleIndex].position);
-		userNode->setOrientation(mUserNodePoses[mUserNodePosesToggleIndex].orientation);
-		LOG(LOG_TYPE_DEBUG, "Camera position and orientation are toggled: " << userNode->getPosition().toString() << " | " << userNode->getOrientation().toString());
-		mUserNodePosesToggleIndex++;
-		if (mUserNodePoses.size() == mUserNodePosesToggleIndex)
+		if (mUserNodePosesToggleIndex < mUserNodePoses.size())
+		{
+			userNode->setPosition(mUserNodePoses[mUserNodePosesToggleIndex].position);
+			userNode->setOrientation(mUserNodePoses[mUserNodePosesToggleIndex].orientation);
+			LOG(LOG_TYPE_DEBUG, "Camera position and orientation are toggled: " << userNode->getPosition().toString() << " | " << userNode->getOrientation().toString());
+			mUserNodePosesToggleIndex++;
+		}
+		else
+		{
 			mUserNodePosesToggleIndex = 0;
+		}
 	}
 }
 
