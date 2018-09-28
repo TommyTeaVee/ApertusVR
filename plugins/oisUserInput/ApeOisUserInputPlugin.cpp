@@ -201,16 +201,18 @@ void Ape::OISUserInputPlugin::Init()
 	if (auto userNode = mpScene->getNode(mpSystemConfig->getSceneSessionConfig().generatedUniqueUserNodeName).lock())
 	{
 		mUserNode = userNode;
+		toggleUserNodePoses(userNode);
+
 		mDummyNode = mpScene->createNode(userNode->getName() + "_DummyNode");
+		if (auto dummyNode = mDummyNode.lock())
+		{
+			toggleUserNodePoses(dummyNode);
+		}
+
 		if (auto headNode = mpScene->getNode(userNode->getName() + "_HeadNode").lock())
 		{
 			mHeadNode = headNode;
 			mHeadNodeName = headNode->getName();
-		}
-		if (auto dummyNode = mDummyNode.lock())
-		{
-			toggleUserNodePoses(userNode);
-			toggleUserNodePoses(dummyNode);
 		}
 	}
 
