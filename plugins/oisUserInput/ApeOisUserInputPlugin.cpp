@@ -201,19 +201,13 @@ void Ape::OISUserInputPlugin::Init()
 	if (auto userNode = mpScene->getNode(mpSystemConfig->getSceneSessionConfig().generatedUniqueUserNodeName).lock())
 	{
 		mUserNode = userNode;
-		toggleUserNodePoses(userNode);
-
 		mDummyNode = mpScene->createNode(userNode->getName() + "_DummyNode");
-		if (auto dummyNode = mDummyNode.lock())
-		{
-			toggleUserNodePoses(dummyNode);
-		}
-
 		if (auto headNode = mpScene->getNode(userNode->getName() + "_HeadNode").lock())
 		{
 			mHeadNode = headNode;
 			mHeadNodeName = headNode->getName();
 		}
+		toggleUserNodePoses();
 	}
 
 	LOG(LOG_TYPE_DEBUG, "OISUserInputPlugin waiting for main window");
@@ -287,14 +281,7 @@ bool Ape::OISUserInputPlugin::keyPressed(const OIS::KeyEvent& e)
 	if (e.key == OIS::KeyCode::KC_V)
 	{
 		LOG(LOG_TYPE_DEBUG, "Key pressed V");
-		if (auto userNode = mUserNode.lock())
-		{
-			toggleUserNodePoses(userNode);
-			if (auto dummyNode = mDummyNode.lock())
-			{
-				toggleUserNodePoses(dummyNode);
-			}
-		}
+		toggleUserNodePoses();
 	}
 	if (e.key == OIS::KeyCode::KC_SPACE)
 	{
@@ -562,18 +549,32 @@ void Ape::OISUserInputPlugin::saveUserNodePose()
 	}
 }
 
-void Ape::OISUserInputPlugin::toggleUserNodePoses(Ape::NodeSharedPtr userNode)
+void Ape::OISUserInputPlugin::toggleUserNodePoses()
 {
 	if (mUserNodePoses.size() > 0)
 	{
 		if (mUserNodePosesToggleIndex < mUserNodePoses.size())
 		{
-			userNode->setPosition(mUserNodePoses[mUserNodePosesToggleIndex].position);
-			userNode->setOrientation(mUserNodePoses[mUserNodePosesToggleIndex].orientation);
-			LOG(LOG_TYPE_DEBUG, "Camera position and orientation are toggled: " << userNode->getPosition().toString() << " | " << userNode->getOrientation().toString());
-			mUserNodePosesToggleIndex++;
+			if (auto userNode = mUserNode.lock())
+			{
+				if (auto dummyNode = mDummyNode.lock())
+				{
+					dummyNode->setPosition(mUserNodePoses[mUserNodePosesToggleIndex].position);
+					userNode->setPosition(dummyNode->getPosition());
+
+					dummyNode->setOrientation(mUserNodePoses[mUserNodePosesToggleIndex].orientation);
+					userNode->setOrientation(dummyNode->getOrientation());
+				}
+				else
+				{
+					userNode->setPosition(mUserNodePoses[mUserNodePosesToggleIndex].position);
+					userNode->setOrientation(mUserNodePoses[mUserNodePosesToggleIndex].orientation);
+				}
+				LOG(LOG_TYPE_DEBUG, "Camera position and orientation are toggled: " << userNode->getPosition().toString() << " | " << userNode->getOrientation().toString());
+				mUserNodePosesToggleIndex++;
+			}
 		}
-		else
+		if (mUserNodePosesToggleIndex == mUserNodePoses.size())
 		{
 			mUserNodePosesToggleIndex = 0;
 		}
