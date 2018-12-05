@@ -23,11 +23,11 @@
         }
     },
     "pluginManager": {
-      "plugins": [
-        "ApeOgreRenderPlugin",
-        "ApeOisUserInputPlugin",
-        "ApeIndustry40Plugin",
-        "ApeKinectPlugin"
-      ]
+        "plugins": [
+            "ApeOgreRenderPlugin",
+            "ApeOisUserInputPlugin",
+            "ApeIndustry40Plugin",
+            "ApeKinectPlugin"
+        ]
     }
 }
