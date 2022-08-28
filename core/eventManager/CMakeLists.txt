@@ -1,6 +1,6 @@
 #MIT License
 #
-#Copyright (c) 2016 MTA SZTAKI
+#Copyright (c) 2018 MTA SZTAKI
 #
 #Permission is hereby granted, free of charge, to any person obtaining a copy
 #of this software and associated documentation files (the "Software"), to deal
@@ -22,18 +22,17 @@
 
 # Add all header and cpp files in the directory to the project
 set (HEADERS
-	ApeEventManagerImpl.h
+	apeEventManagerImpl.h
 	)
 set (SOURCES
-	ApeEventManagerImpl.cpp
+	apeEventManagerImpl.cpp
 	)
 
-
-add_library (ApeEventManager SHARED ${SOURCES} ${HEADERS})
+add_library (apeEventManager SHARED ${SOURCES} ${HEADERS})
 
 # Link with dependency libraries
-target_link_libraries (ApeEventManager)
+target_link_libraries (apeEventManager)
 
 # Place target xxx into the specified folder in IDEs supporting it
-set_property (TARGET ApeEventManager PROPERTY COMPILE_DEFINITIONS BUILDING_APE_EVENTMANAGER_DLL)
-set_property (TARGET ApeEventManager PROPERTY FOLDER "Core")
+set_property (TARGET apeEventManager PROPERTY COMPILE_DEFINITIONS BUILDING_APE_EVENTMANAGER_DLL)
+set_property (TARGET apeEventManager PROPERTY FOLDER "Core")

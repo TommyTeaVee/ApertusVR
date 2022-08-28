@@ -1,0 +1,10 @@
+{
+  "cameraNames": [
+    "camera1",
+    "camera2",
+    "camera3"
+  ],
+  "cameraPoses": [
+    [ 0, 0, 0, 1, 0, 0, 0 ]
+  ]
+} 

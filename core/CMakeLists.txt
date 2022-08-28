@@ -22,8 +22,8 @@
 
 
 add_subdirectory (eventManager)
-add_subdirectory (mainWindow)
+add_subdirectory (logManager)
 add_subdirectory (pluginManager)
-add_subdirectory (scene)
+add_subdirectory (sceneManager)
 add_subdirectory (system)
-add_subdirectory (systemConfig)
+add_subdirectory (coreConfig)

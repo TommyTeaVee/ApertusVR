@@ -1,6 +1,6 @@
 #MIT License
 #
-#Copyright (c) 2016 MTA SZTAKI
+#Copyright (c) 2018 MTA SZTAKI
 #
 #Permission is hereby granted, free of charge, to any person obtaining a copy
 #of this software and associated documentation files (the "Software"), to deal
@@ -22,24 +22,24 @@
 
 # Add all header and cpp files in the directory to the project
 set (SOURCES
-	ApeSystem.cpp
+	apeSystem.cpp
 	)
 
 include_directories(
-	${PROJECT_SOURCE_DIR}/core/pluginManager 
-	${PROJECT_SOURCE_DIR}/core/eventManager 
-	${PROJECT_SOURCE_DIR}/core/systemConfig
+	${PROJECT_SOURCE_DIR}/core/pluginManager
+	${PROJECT_SOURCE_DIR}/core/eventManager
+	${PROJECT_SOURCE_DIR}/core/logManager
+	${PROJECT_SOURCE_DIR}/core/CoreConfig
 	${PROJECT_SOURCE_DIR}/core/mainWindow
-	${PROJECT_SOURCE_DIR}/core/scene
-	${PROJECT_SOURCE_DIR}/core/scene/session
+	${PROJECT_SOURCE_DIR}/core/sceneManager
 	${RAKNET_INCLUDE_DIR}	
 	)
 
-add_library (ApeSystem SHARED ${SOURCES} )
+add_library (apeSystem SHARED ${SOURCES} )
 
-# Link with dependency libraries
-target_link_libraries (ApeSystem ApePluginManager ApeEventManager ApeScene ApeSystemConfig ApeMainWindow RAKNET ws2_32)
+target_link_libraries (apeSystem apePluginManager apeEventManager apeLogManager apeSceneManager apeCoreConfig)
+
 
 # Place target xxx into the specified folder in IDEs supporting it
-set_property (TARGET ApeSystem PROPERTY COMPILE_DEFINITIONS BUILDING_APE_SYSTEM_DLL)
-set_property (TARGET ApeSystem PROPERTY FOLDER "Core")
+set_property (TARGET apeSystem PROPERTY COMPILE_DEFINITIONS BUILDING_APE_SYSTEM_DLL)
+set_property (TARGET apeSystem PROPERTY FOLDER "Core")
